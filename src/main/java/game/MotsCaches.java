@@ -38,7 +38,7 @@ public class MotsCaches extends JFrame {
         setTitle("Jeu de Mots Cachés");  
         setSize(1920, 1080); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); 
 
         setFocusable(true);
         requestFocusInWindow();
@@ -205,33 +205,32 @@ public class MotsCaches extends JFrame {
 //    }
 
     private void verifierMotTrouve() throws IOException {
-        if (isResetting) {
-            System.out.println("Vérification du mot ignorée pendant la réinitialisation.");
-            return;
-        }
+    	  if (isResetting) {
+    	    System.out.println("Vérification du mot ignorée pendant la réinitialisation.");
+    	    return;
+    	  }
 
-        StringBuilder sb = new StringBuilder();
-        for (Point point : lettresSelectionnees) { 
-            sb.append(grille[point.x][point.y]);
-        }
-        String sequence = sb.toString();
+    	  StringBuilder sb = new StringBuilder();
+    	  for (Point point : lettresSelectionnees) {
+    	    sb.append(grille[point.x][point.y]);
+    	  }
+    	  String sequence = sb.toString();
 
-        boolean wordFound = false;
-        for (String mot : mots) {
-            if (mot.equals(sequence)) {
-                motsTrouves.add(mot);
-                wordFound = true;
-                lettresSelectionnees.clear();
-                mettreAJourListeMots();
-            }
-        }
-        if (wordFound) {
-            lettresSelectionnees.clear();
-            motsTrouves.clear(); 
-            mettreAJourListeMots();
-        }
-    }
-    
+    	  boolean wordFound = false;
+    	  for (String mot : mots) {
+    	    if (mot.equals(sequence)) {
+    	      motsTrouves.add(mot);
+    	      wordFound = true;
+    	      lettresSelectionnees.clear(); 
+    	      mettreAJourListeMots();
+    	      break;
+    	    }
+    	  }
+    	  if (!wordFound) {
+    	    lettresSelectionnees.clear(); 
+    	  }
+    	  mettreAJourListeMots();
+    	}
 
     private void mettreAJourListeMots() {
         listeModel.clear();
@@ -250,23 +249,23 @@ public class MotsCaches extends JFrame {
             frame.setVisible(true);
         });
     } 
-
+ 
     public void handleLeftClick(CelluleBouton celluleBouton) {
-    	  if (isResetting) { 
+    	  if (isResetting) {
     	    System.out.println("Événement de la souris ignoré pendant la réinitialisation.");
     	    return;
     	  }
     	  lettresSelectionnees.add(new Point(celluleBouton.getRow(), celluleBouton.getCol()));
-    	  celluleBouton.setBackground(Color.RED);  
+    	  celluleBouton.setBackground(Color.RED);
     	}
 
-    public void handleRightClick(CelluleBouton celluleBouton) {
+    	public void handleRightClick(CelluleBouton celluleBouton) {
     	  if (isResetting) {
     	    System.out.println("Événement de la souris ignoré pendant la réinitialisation.");
     	    return;
     	  }
     	  lettresSelectionnees.remove(new Point(celluleBouton.getRow(), celluleBouton.getCol()));
-    	  celluleBouton.setBackground(null);
+    	  celluleBouton.setBackground(null); 
     	}
 
     public boolean isResetting() {
@@ -274,5 +273,6 @@ public class MotsCaches extends JFrame {
     }
     
 }
+
 
 
